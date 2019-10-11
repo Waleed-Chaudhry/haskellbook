@@ -1,0 +1,124 @@
+To install:
+https://docs.haskellstack.org/en/stable/README/
+Follow instructions until: https://docs.haskellstack.org/en/stable/README/#workflow
+
+Running the repl:
+  stack ghci
+  :m to return to prelude - which is just a library of standard of functions
+
+Function definition:
+  Prelude> triple x = x*3
+  Prelude> triple 8
+  24
+
+Precedence and Associativity
+  Prelude> :info (+)
+  class Num a where
+    (+) :: a -> a -> a
+    ...
+      -- Defined in ‘GHC.Num’
+  infixl 6 +
+infixl -> Has left associativity i.e. starts evaluating the function from the left
+6 -> Precedence i.e. the order in which the operation will be performed. Multiplication has a precedence of 7
+
+Best practices:
+  Indentation matters
+  Use spaces, not tabs
+
+Negative Numbers:
+  For negative numbers, do:
+  Prelude> 1000 + (-9)
+  991
+  Be careful about using mod for negative numbers
+
+Parenthesization:
+  f $ a = fa
+    (2^)$ 2 + 2 $(*30) is evaluated as 
+    (2^)$ 4 * 30 (Right associativity, and we evaluate the expression 2+2 *before* the $ before applying the $ operator)
+    (2^) $ 120 we evaluate the expression 2+2
+  
+  Infix Operations:
+    Prelude> (5/) 2 -- This is simply a bracket closed around 5 so gets evaluated as 5/2
+    Prelude> (/) 5 2 -- Infix representation of 5/2
+    Prelude> (/5) 2 -- Infix / function has the argument 5 already applied, so gets applied to the next argument after i.e. 2/5 = 0.4
+    Prelude> (-2) 1 -- Doesn't work since - isn't subtraction but a negation
+    Prelude> (subtract 2) 1 -- Use this instead which evaluates to -1
+
+
+Don't get let vs where :(
+
+***** Chapter 2 *********
+Prelude> :type 'h' -> 'h' :: Char
+Prelude> :type "hello" -> "hello" :: [Char]
+-- Remember, we declare strings as "", and chars as ''
+
+Printing
+  print -- can be used to print other types of vars
+  putStrLn "hello world" -- Only for strings
+  putStr "hello world" -- No new line
+
+Types
+  Prelude> :t (++) -> (++) :: [a] -> [a] -> [a]
+  This means that ++ can have two arguments, which is a list type a, and give a list of type a as the answer
+  Prelude> (++) "abc" "def" -> "abcdef" Prefix
+  Prelude>  "abc" ++ "def" -> "abcdef Infix
+
+  Prelude> :t concat -> concat :: Foldable t => t [a] -> [a]
+  Prelude> concat ["abc", "def"] -> "abcdef"
+
+List operations on a String:
+Prelude> head "Waleed" -> 'W'
+Prelude> tail "Waleed" -> "aleed"
+
+Prelude> take 1 "Waleed" -> "W"
+Prelude> take 5 "Waleed" -> "Walee"
+Prelude> take 9 "Waleed" -> "Waleed"
+Prelude> drop 4 "Waleed" -> "ed"
+
+Prelude> "Waleed" !! 2 -> 'l'
+
+Chapter 3
+Don't get Mood Swing (page 90)
+
+***
+  Integral 
+  e.g. Integers (negative, 0, positive) and Words (0, positive)
+  Prelude> import GHC.Int
+  Prelude GHC.Int> minBound :: Int8
+  -128
+  Prelude GHC.Int> maxBound :: Int16
+  32767
+
+  Word16
+
+  Fractional:
+  e.g. Floats
+
+Ordial
+  <, == Can compare chars and strings based on alphabetical order
+  Prelude> "Waleed" == "Waleed"
+  True
+
+  Prelude> 'a' < 'b'
+  True
+
+Conditional Statements
+  Prelude> x = 0
+  Prelude> a = "Yes"
+  Prelude> b = "No"
+  Prelude> if (x+1 == 1) then a else b
+  "Yes"
+
+Tuples
+  Prelude> a = (,) 8 10
+  Prelude> a
+  (8,10)
+  Prelude> import Data.Tuple
+  Prelude Data.Tuple> swap a
+  (10,8)
+
+  Prelude Data.Tuple> 1 + fst(a) -- Can also use snd
+  9
+
+Chapter 5
+* Type checking is static and occurs at compile time
